@@ -11,7 +11,7 @@ Download recipry project and run the following commands inside "recipry-main" di
   & python3 manage.py runserver<br>
   
   main page : 127.0.0.1:8000<br>
-  Admin     : 127.0.0.1:8000/admin<br>
+  admin     : 127.0.0.1:8000/admin<br>
   
   u: recprydjango<br>
   p: reciprypass<br>
