@@ -1,0 +1,8 @@
+{
+    "python.pythonPath": "venv/bin/python3.6",
+    "editor.detectIndentation": false,
+//     "python.linting.pylintArgs": [
+//         "--load-plugins=pylint_django"
+//    ]
+}
+

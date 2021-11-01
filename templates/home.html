@@ -1,0 +1,183 @@
+{% load static %}
+{% load crispy_forms_tags %}
+{% load widget_tweaks %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RECIPRY</title>
+{% block headjavascript %}{{ form.media.js }}{% endblock %}
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css'%}">
+<link rel="alternate" type="application/json+oembed">
+
+<script>
+    $(document).ready(function() {
+        $("select").on("change", function() {
+            if($("select[name='category']").val() == "") { 
+                $("select[name='category'] > option:first-child").text('Meal Type');
+                $("select[name='subcategory']").prop('disabled', 'disabled');
+                $("select[name='subcategory'] > option:first-child").text('Recipe Type');
+                $("select[name='recipename']").prop('disabled', 'disabled');
+                $("select[name='recipename'] > option:first-child").text('Pick Recipe');
+            } else {
+                $("select[name='subcategory']").removeAttr("disabled");
+            }
+        }).trigger('change');
+        $("select[name='subcategory']").on("change", function() {
+            if($("select[name='subcategory']").val() == "") { 
+                $("select[name='recipename']").prop('disabled', 'disabled');
+            } else {
+                $("select[name='recipename']").removeAttr("disabled");
+                $("select[name='category'] > option:first-child").text('Meal Type');
+            }
+        }).trigger('change');
+    });
+</script>
+</head>
+<body>
+    {% block content %}
+    <div class="container">
+        <br/>
+        <div class="row justify-content-center">
+            <div class="col-12">
+                <center><img src="https://www.recipry.com/media/images/recipry.png" alt="my image" height="100"></center>
+            </div>
+        </div>
+        <br/>
+        <form method="POST">
+            <div class="form-row">
+                {% csrf_token %}
+                <div class="form-group custom-control col-md-3">         
+                    {{form.category|add_class:"custom-select custom-select-lg"}}
+                </div>
+                <div class="form-group custom-control col-md-3">
+                    <select name="subcategory" disabled class="custom-select custom-select-lg chained-fk" required="required" id="id_subcategory" data-chainfield="category" data-url="/chaining/filter/recipe/Subcategory/category/recipe/Recipe/subcategory" data-value="null" data-auto_choose="false" data-empty_label="Recipe Type">
+                </select>
+                </div>
+                <div class="form-group custom-control col-md-3">
+                    <select name="recipename" disabled class="custom-select custom-select-lg chained-fk" required="required" id="id_recipename" data-chainfield="subcategory" data-url="/chaining/filter/recipe/RecipeName/subcategory/recipe/Recipe/recipename" data-value="null" data-auto_choose="false" data-empty_label="Pick Recipe">
+                </select>
+                </div>
+                <div class="form-group col-md-3">
+                    <input type="submit" value="Submit" class="btn-lg btn-block" >
+                </div>
+            </div>
+        </form>
+        <div class="md">
+        </div>
+        {% if recipes %}
+        <div class="row justify-content-center">
+            <div class="col-12">
+            <br>
+            {% for recipe in recipes %}
+                <h2>{{recipe.recipename__recipename}}</h2>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-12">
+                <p>
+                    {% autoescape off %}
+                    {% for image in recipes %}
+                        {{image.image}}
+                    {% endfor %}
+                    {% endautoescape %}
+                </p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-12">
+                <p>
+                    <u>DESCRIPTION:</u>
+                    {% for recipe in recipes %}
+                        {{recipe.description}}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-12">
+                    <p>
+                        <u>COOKWARE:</u>
+                        {% for cookware in cookwares %}
+                            <a href="{{cookware.cookware.link}}" target="_blank">{{cookware.cookware}}</a>{%if not forloop.last%},{%endif%}
+                        {% endfor %}
+                        <br>
+                    </p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-12">
+                <p>
+                    <u>PREP & COOK TIME:</u>
+                    {% for cooktime in cooktimes %}
+                        {{cooktime.hour}} hr {{cooktime.minute}} min
+                    {% endfor %}
+                </p>
+                <p>
+                    <u>TOTAL SERVINGS:</u>
+                    {% for servingsize in servingsizes %}
+                        {{servingsize.servingsize}}
+                    {% endfor %}
+                </p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-12">
+                <ul class="nav nav-tabs nav-fill" id="myTab" role="tablist">
+                    <li class="nav-item">
+                    <a class="nav-link active" id="ingredients-tab" data-toggle="tab" href="#ingredients" role="tab" aria-controls="ingredients" aria-selected="true">INGREDIENTS</a>
+                    </li>
+                    <li class="nav-item ">
+                    <a class="nav-link" id="directions-tab" data-toggle="tab" href="#directions" role="tab" aria-controls="directions" aria-selected="false">DIRECTIONS</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-6 col-md-12">   
+                <div class="tab-content mt-4" id="myTabContent">
+                    <div class="tab-pane fade show active" id="ingredients" role="tabpanel" aria-labelledby="ingredients-tab">
+                        <table style="width: 100%">
+                            {% for ingredient in ingredients %}
+                            <tr>
+                                <td>{{ingredient.amount}}</td>
+                                <td>&nbsp;&nbsp;</td>
+                                <td>{{ingredient.unit}}</td>
+                                <td><a href="{{ingredient.ingredient.link}}" target="_blank">{{ingredient.ingredient}}</a></td>
+                            </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                    <div class="tab-pane fade" id="directions" role="tabpanel" aria-labelledby="directions-tab">
+                        <table style="width: 100%">
+                            {% for direction in directions %}
+                                <tr>
+                                    <td class="test">{{forloop.counter}}</td>
+                                    <td>{{direction.directions|linebreaks}}</td>
+                                </tr>
+                            {% endfor %}
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endif %}
+        <hr>
+        <div class="row">
+            <div class="col-12 footer">
+                <p class="copy">© 2020 Recipry.com All Rights Reserved<br>
+                Powered by <a class="copy" href="https://baffledjet.com" target="_blank">BAFFLEDJET.COM</a>
+                </p>
+            </div>
+        </div>
+    </div>
+    {% endblock %}   
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>
