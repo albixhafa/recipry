@@ -1,4 +1,4 @@
-ABOUT : RECIPRY is a web application built with Django Framework that simplifies on how to create recipes.<br>
+ABOUT : RECIPRY is a web application built with Django Framework that simplifies the cooking process.
 
 DEMO : https://www.recipry.com/<br>
 
