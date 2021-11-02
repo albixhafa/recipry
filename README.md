@@ -7,7 +7,7 @@ INSTALLATION GUIDE<br>
 Download recipry project and run the following commands inside "recipry-main" directory :<br>
 
 1. Run Application<br>
-  $ source/venv/bin/activate<br>
+  $ source venv/bin/activate<br>
   $ python3 manage.py runserver<br>
   
   main page : 127.0.0.1:8000<br>
