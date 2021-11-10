@@ -8,8 +8,8 @@ Download recipry project and run the following commands inside "recipry-main" di
 
 **1. Run Application<br>**
 ```$ source venv/bin/activate
-  $ python3 manage.py runserver```
-  
+  $ python3 manage.py runserver
+  ```
   main page : 127.0.0.1:8000<br>
   admin     : 127.0.0.1:8000/admin<br>
   
