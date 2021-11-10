@@ -14,7 +14,7 @@ $ python3 manage.py runserver
 main page : 127.0.0.1:8000<br>
 admin     : 127.0.0.1:8000/admin<br>
   
-user: recprydjango<br>
+u: recprydjango<br>
 p: reciprypass<br>
 
 <img src="media/images/rec1.png">
