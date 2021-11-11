@@ -6,7 +6,13 @@
 
 Download recipry project and run the following commands inside "recipry-main" directory :<br>
 
-**1. Run Application<br>**
+**1. Install Dependecies<br>**
+```
+sudo apt-get install python3
+sudo apt-get install python3-pip
+sudo apt-get install python3-venv
+```
+**2. Run Application<br>**
 ```
 $ source venv/bin/activate
 $ python3 manage.py runserver
