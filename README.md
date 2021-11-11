@@ -23,10 +23,18 @@ admin     : 127.0.0.1:8000/admin<br>
 u: recprydjango<br>
 p: reciprypass<br>
 
+<hr>
 <img src="media/images/rec1.png">
+<hr>
 <img src="media/images/rec2.png">
+<hr>
 <img src="media/images/rec3.png">
+<hr>
 <img src="media/images/rec4.png">
+<hr>
 <img src="media/images/rec5.png">
+<hr>
 <img src="media/images/rec6.png">
+<hr>
 <img src="media/images/rec7.png">
+<hr>
