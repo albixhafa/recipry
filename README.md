@@ -1,7 +1,5 @@
 **ABOUT :** RECIPRY (2020) is a web application built with Django Framework that simplifies the cooking process.
 
-**DEMO :** https://www.recipry.com/<br>
-
 **INSTALLATION GUIDE<br>**
 
 Download recipry project and run the following commands inside "recipry-main" directory :<br>
